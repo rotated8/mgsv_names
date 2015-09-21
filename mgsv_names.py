@@ -41,5 +41,4 @@ def get_name():
     return ' '.join((adj, anim))
 
 if __name__ == '__main__':
-    for _ in range(12):
-        print(get_name())
+    print(get_name())
