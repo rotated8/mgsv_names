@@ -20,7 +20,7 @@ uncommons = {
         'spicy': 'sandworm',
         # Animals:
         'ocelot': 'revolver',
-        'lion': 'snoop',
+        'lion': 'snooping',
         'tiger': 'crouching',
         'hippo': 'hungry',
         'falcon': 'punching',
