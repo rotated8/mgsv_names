@@ -1,14 +1,14 @@
-import random
+import random, os
 
 global adjectives, animals, rares
 
-with open('adjectives.txt') as f:
+with open(os.path.join(os.path.dirname(__file__), 'adjectives.txt')) as f:
     adjectives = f.readlines()
 
-with open('animals.txt') as f:
+with open(os.path.join(os.path.dirname(__file__), 'animals.txt')) as f:
     animals = f.readlines()
 
-with open('rares.txt') as f:
+with open(os.path.join(os.path.dirname(__file__), 'rares.txt')) as f:
     rares = f.readlines()
 
 uncommons = {
@@ -26,7 +26,7 @@ uncommons = {
         'falcon': 'punching',
 }
 
-def get_name():
+def generate_name():
     adj = random.choice(adjectives).strip()
     anim = random.choice(animals).strip()
 
@@ -41,4 +41,4 @@ def get_name():
     return ' '.join((adj, anim))
 
 if __name__ == '__main__':
-    print(get_name())
+    print(generate_name())
