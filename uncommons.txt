@@ -1,0 +1,12 @@
+# Adjectives
+master|miller
+raging|bull
+hidden|dragon
+humming|bird
+spicy|sandworm
+# Animals
+ocelot|revolver
+lion|snooping
+tiger|crouching
+hippo|hungry
+falcon|punching
