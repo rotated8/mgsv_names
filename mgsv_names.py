@@ -1,8 +1,8 @@
 from __future__ import unicode_literals, print_function
 import sqlite3, os, random
 
-_select = 'select {} from {} order by random() limit 1'
-_uncommon_select = 'select value from uncommons where key=?'
+_select = 'select {0} from {1} limit 1 offset abs(random()) % (select count({0}) from {1});'
+_uncommon_select = 'select value from uncommons where key=?;'
 
 def generate_name():
     conn = sqlite3.connect(os.path.join(os.path.dirname(__file__), 'names.db'))
