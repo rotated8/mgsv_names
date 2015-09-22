@@ -2,6 +2,6 @@
 
 Sometimes, this will generate an 'uncommon' or even a 'rare' code name.
 
-To add new names, you can edit the adjectives.txt, animals.txt, or rares.txt files. Uncommons are stored in the python script itself at the moment.
+To add new names, you can edit the adjectives.txt, animals.txt, uncommons.txt, or rares.txt files. Then, run load\_db.py. That script generates the names.db file that the mgsv\_names.py script uses.
 
-The textfiles may disappear in favor of a SQLite database in the future, although this version will live on in a different branch.
+To generate a name, simply run mgsv\_names.py with Python 2.6, 2.7 or 3.0+
