@@ -1,18 +1,18 @@
 from __future__ import unicode_literals, print_function
 import sqlite3, os, random
 
-_select = 'select {0} from {1} limit 1 offset abs(random()) % (select count({0}) from {1});'
-_uncommon_select = 'select value from uncommons where key=?;'
+_select_random = 'select {0} from {1} limit 1 offset abs(random()) % (select count({0}) from {1});'
+_select_uncommon = 'select value from uncommons where key=?;'
 
 def generate_name():
     conn = sqlite3.connect(os.path.join(os.path.dirname(__file__), 'names.db'))
     cursor = conn.cursor()
 
-    adj = cursor.execute(_select.format('adjective', 'adjectives')).fetchone()[0]
-    anim = cursor.execute(_select.format('animal', 'animals')).fetchone()[0]
-    rare = cursor.execute(_select.format('name', 'rares')).fetchone()[0]
-    uncommon_anim = cursor.execute(_uncommon_select, [adj]).fetchone()
-    uncommon_adj = cursor.execute(_uncommon_select, [anim]).fetchone()
+    adj = cursor.execute(_select_random.format('adjective', 'adjectives')).fetchone()[0]
+    anim = cursor.execute(_select_random.format('animal', 'animals')).fetchone()[0]
+    rare = cursor.execute(_select_random.format('name', 'rares')).fetchone()[0]
+    uncommon_anim = cursor.execute(_select_uncommon, [adj]).fetchone()
+    uncommon_adj = cursor.execute(_select_uncommon, [anim]).fetchone()
 
     conn.close()
 
@@ -27,4 +27,5 @@ def generate_name():
     return ' '.join((adj, anim))
 
 if __name__ == '__main__':
-    print(generate_name())
+    for _ in range(20):
+        print(generate_name())
