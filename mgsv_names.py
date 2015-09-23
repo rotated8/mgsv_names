@@ -27,5 +27,4 @@ def generate_name():
     return ' '.join((adj, anim))
 
 if __name__ == '__main__':
-    for _ in range(20):
-        print(generate_name())
+    print(generate_name())
