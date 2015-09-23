@@ -1,39 +1,35 @@
+from __future__ import unicode_literals, print_function
 import sqlite3, os
 
-conn = sqlite3.connect('names.db')
-c = conn.cursor()
+def insert(cursor, table, line):
+    if not line.startswith('#'):
+        values = line.strip().split(',')
+        n_values = '? ' * len(values)
+        n_values = ', '.join(n_values.split())
+        try:
+            cursor.execute('insert into {} values ({});'.format(table, n_values), values)
+        except sqlite3.OperationalError as error:
+            print('Skipped `{}`, it was rejected by the database:\n{}'.format(line, error))
 
-c.execute('drop table adjectives')
-c.execute('drop table animals')
-c.execute('drop table rares')
-c.execute('drop table uncommons')
-conn.commit()
+if __name__ == '__main__':
+    tables = {
+            'adjectives': 'adjective text unique',
+            'animals': 'animal text unique',
+            'rares': 'name text unique',
+            'uncommons': 'key text, value text',
+    }
 
-c.execute('create table adjectives (adjective text unique)')
-c.execute('create table animals (animal text unique)')
-c.execute('create table rares (name text unique)')
-c.execute('create table uncommons (key text, value text)')
-conn.commit()
+    connection = sqlite3.connect('names.db')
+    cursor = connection.cursor()
 
-with open(os.path.join(os.path.dirname(__file__), 'adjectives.txt')) as f:
-    for line in f:
-        c.execute('insert into adjectives values (?)', line.strip())
-conn.commit()
+    for table, columns in tables.items():
+        cursor.execute('drop table {};'.format(table))
+        cursor.execute('create table {} ({});'.format(table, columns))
+        connection.commit()
 
-with open(os.path.join(os.path.dirname(__file__), 'animals.txt')) as f:
-    for line in f:
-        c.execute('insert into animals values (?)', line.strip())
-conn.commit()
+        with open(os.path.join(os.path.dirname(__file__), table + '.txt')) as f:
+            for line in f:
+                insert(cursor, table, line)
+        connection.commit()
 
-with open(os.path.join(os.path.dirname(__file__), 'rares.txt')) as f:
-    for line in f:
-        c.execute('insert into rares values (?)', line.strip())
-conn.commit()
-
-with open(os.path.join(os.path.dirname(__file__), 'uncommons.txt')) as f:
-    for line in f:
-        if not line.startswith('#'):
-            c.execute('insert into uncommons values (?, ?)', line.strip().split('|'))
-conn.commit()
-
-conn.close()
+    connection.close()
