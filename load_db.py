@@ -4,8 +4,7 @@ import sqlite3, os
 def insert(cursor, table, line):
     if not line.startswith('#'):
         values = line.strip().split(',')
-        n_values = '? ' * len(values)
-        n_values = ', '.join(n_values.split())
+        n_values = ', '.join(('?' for _ in values))
         try:
             cursor.execute('insert into {} values ({});'.format(table, n_values), values)
         except sqlite3.OperationalError as error:
