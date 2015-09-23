@@ -11,7 +11,7 @@ def insert(cursor, table, line):
             print('Skipped `{}`, it was rejected by the database:\n{}'.format(line, error))
 
 if __name__ == '__main__':
-    tables = {
+    schema = {
             'adjectives': 'adjective text unique',
             'animals': 'animal text unique',
             'rares': 'name text unique',
@@ -21,7 +21,7 @@ if __name__ == '__main__':
     connection = sqlite3.connect('names.db')
     cursor = connection.cursor()
 
-    for table, columns in tables.items():
+    for table, columns in schema.items():
         cursor.execute('drop table {};'.format(table))
         cursor.execute('create table {} ({});'.format(table, columns))
         connection.commit()
