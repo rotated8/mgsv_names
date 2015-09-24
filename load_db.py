@@ -12,6 +12,7 @@ def insert(cursor, table, line):
 
 if __name__ == '__main__':
     schema = {
+            # Table_name: row_definitions
             'adjectives': 'adjective text unique',
             'animals': 'animal text unique',
             'rares': 'name text unique',
